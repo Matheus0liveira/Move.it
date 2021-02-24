@@ -1,10 +1,18 @@
-import { useEffect, useState } from 'react';
+import { ChallengeContext } from 'contexts/ChallengesContext';
+import { useContext, useEffect, useState } from 'react';
+import { ReactSVG } from 'react-svg';
 import * as S from './styles';
+
+let countDownTimeout: NodeJS.Timeout
 
 export default function CountDown(){
 
-  const [time, setTime] = useState(25 * 60);
-  const [active, setActive] = useState(false);
+  const { startNewChallenge } = useContext(ChallengeContext);
+
+  const [time, setTime] = useState(0.1    * 60);
+  const [isActive, setIsActive] = useState(false);
+  const [hasFinished, setHasFinished] = useState(false);
+
 
   const minutes = Math.floor(time/60);
 
@@ -13,19 +21,30 @@ export default function CountDown(){
   const [minuteLeft, minuteRight] = String(minutes).padStart(2, '0').split('');
   const [secondLeft, secondRight] = String(seconds).padStart(2, '0').split('');
 
-  const startCountDown = () => {
-    setActive(true)
+  useEffect(() => {
+    if (isActive && time > 0) {
+      countDownTimeout = setTimeout(() => {
+        setTime((prevState) => prevState - 1);
+      }, 1000);
+    } else if (isActive && time === 0) {
+      setIsActive(false);
+      setHasFinished(true);
+      startNewChallenge();
+    }
+  }, [isActive, time]);
+
+
+  const handleCountDown = () => {
+    
+    if(isActive){
+      clearTimeout(countDownTimeout);
+      setTime(0.1 * 60);
+    }
+    setIsActive(!isActive);
+
   };
 
-  useEffect(() => {
-
-    if(active && time > 0){
-      setTimeout(() => {
-        setTime(prevState => prevState - 1);
-      }, 1000);
-    }
-
-  }, [active, time]);
+  
 
   return (
     <div>
@@ -41,7 +60,29 @@ export default function CountDown(){
         </S.Timer>
       </S.Container>
 
-      <S.Button type="button" onClick={startCountDown}>Iniciar um ciclo</S.Button>
+      <S.Button
+        type="button"
+        disabled={!!hasFinished}
+        isActive={!!isActive}
+        onClick={handleCountDown}
+      >
+        {hasFinished ? (
+          <>
+            Ciclo encerrado
+            <ReactSVG src="icons/check.svg" />
+          </>
+        ) : isActive ? (
+          <>
+            Abandonar ciclo
+            <ReactSVG src="icons/x.svg" className="x-icon"/>
+          </>
+        ) : (
+          <>
+            Iniciar um ciclo
+            <ReactSVG src="icons/play.svg" />
+          </>
+        )}
+      </S.Button>
     </div>
   );
 }

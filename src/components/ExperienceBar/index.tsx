@@ -1,23 +1,25 @@
+import { ChallengeContext } from 'contexts/ChallengesContext';
+import { useContext } from 'react';
 import * as S from './styles';
 
 export default function ExperienceBar(){
 
-  return (
+  const { currentExperience, experienceToNextLevel } = useContext(ChallengeContext);
 
-    <S.Header experienceLevel={50}>
+  const percentToNextLevel =
+    Math.round(currentExperience * 100) / experienceToNextLevel;
+
+
+  return (
+    <S.Header experienceLevel={percentToNextLevel}>
       <span>0 xp</span>
       <div>
         <div>
-          <span>
-            300xp
-          </span>
+          <span>{currentExperience}xp</span>
         </div>
       </div>
-      <span>600 xp</span>
-
+      <span>{experienceToNextLevel} xp</span>
     </S.Header>
-    
-
   );
   
 };
