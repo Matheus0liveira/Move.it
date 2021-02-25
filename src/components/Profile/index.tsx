@@ -1,6 +1,10 @@
 import * as S from './styles';
 import { ReactSVG } from 'react-svg';
+import { useContext } from 'react';
+import { ChallengeContext } from 'contexts/ChallengesContext';
 export default function Profile(){
+
+  const { level } = useContext(ChallengeContext);
 
   return (
     <S.Container>
@@ -13,7 +17,7 @@ export default function Profile(){
         <strong>Matheus Oliveira</strong>
         <p>
           <ReactSVG src="icons/level.svg" />
-          Level 1
+          Level {level}
         </p>
       </S.Content>
     </S.Container>

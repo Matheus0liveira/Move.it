@@ -1,11 +1,24 @@
 import { ChallengeContext } from 'contexts/ChallengesContext';
+import { CountDowContext } from 'contexts/CountDownContext';
 import { useContext } from 'react';
 import { ReactSVG } from 'react-svg';
 import * as S from './styles';
 
 export default function ChallengeBox(){
 
-  const { activeChallenge, resetChallenge } = useContext(ChallengeContext);
+  const { activeChallenge, resetChallenge, completedChallenge } = useContext(ChallengeContext);
+  const { startCountdown, resetCountdown } = useContext(CountDowContext);
+
+
+  const handleChallengeSucceeded = () => {
+    completedChallenge();
+    resetCountdown();
+  };
+
+  const handleChallengeFailed = () => {
+    resetChallenge();
+    resetCountdown();
+  };
 
   return (
     <S.Container>
@@ -20,11 +33,11 @@ export default function ChallengeBox(){
           </main>
 
           <footer>
-            <S.FailedButton type="button" onClick={resetChallenge}>
+            <S.FailedButton type="button" onClick={handleChallengeFailed}>
               Falhei
             </S.FailedButton>
 
-            <S.SucceededButton type="button">Completei</S.SucceededButton>
+            <S.SucceededButton type="button" onClick={handleChallengeSucceeded}>Completei</S.SucceededButton>
           </footer>
         </S.Active>
       ) : (

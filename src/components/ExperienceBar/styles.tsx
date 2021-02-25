@@ -29,6 +29,8 @@ export const Header = styled.header<HeaderProps>`
         border-radius: 4px;
         background-color: ${theme.colors.green};
 
+        transition: all 1s ease-in;
+
         span{
           position: absolute;
 
@@ -38,6 +40,7 @@ export const Header = styled.header<HeaderProps>`
           transform: translateX(-50%);
 
 
+          transition: all 1.1s ease-in;
           
         }
       }

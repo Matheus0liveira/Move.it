@@ -86,6 +86,8 @@ export const Button = styled.button<ButtonProps>`
       background: ${theme.colors.white};
       color: ${theme.colors.text};
       cursor: not-allowed;
+
+      border-bottom: 4px solid ${theme.colors.green};
     }
 
     div {
@@ -93,8 +95,7 @@ export const Button = styled.button<ButtonProps>`
       align-items: center;
       justify-content: center;
         
-      div svg {
-      }
+      
     }
   `}
 `;
