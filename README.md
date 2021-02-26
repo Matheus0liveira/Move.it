@@ -6,7 +6,7 @@
 [ABOUT](#about) |
 [FUNCTIONALITIES](#functionalities) |
 [GET START](#getting-start) |
-[SCREENSHOTS](#screenshots)
+[SCREENSHOTS](#screenshots) |
 [LAYOUT](#layout)
 
 ---
