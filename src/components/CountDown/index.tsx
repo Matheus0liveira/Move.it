@@ -11,7 +11,8 @@ export default function CountDown(){
     seconds, 
     isActive, 
     hasFinished,
-    startCountdown
+    startCountdown,
+    resetCountdown
     } = useContext(CountDowContext);
 
   const [minuteLeft, minuteRight] = String(minutes).padStart(2, '0').split('');
@@ -39,7 +40,7 @@ export default function CountDown(){
         type="button"
         disabled={!!hasFinished}
         isActive={!!isActive}
-        onClick={startCountdown}
+        onClick={!isActive ? startCountdown : resetCountdown}
       >
         {hasFinished ? (
           <>
